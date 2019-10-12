@@ -1,6 +1,8 @@
 #ifndef __USER_HPP__
 #define __USER_HPP__
 
+#include <string>
+
 class User
 {
 public:
