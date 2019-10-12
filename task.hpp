@@ -9,14 +9,23 @@ public:
 	Task(std::string name, int estimatedTime, int priority, std::string description);
 	Task(const Task& task);
 
-	void addMember(User* user);
+	void editDetails(int estimatedTime, int priority, std::string newDescription);
 
-	bool isMember(User* user) const;
+	void setOwner(std::string username);
+	void completeTask();
+	
+	bool isCompleted() const;
+	bool isOwner(std::string username) const;
+	bool compareName(std::string name) const;
+	bool hasHigherPriorityThan(const Task& other) const;
 
 	std::string toString() const;
-	
-	void completeTask();
-	bool isCompleted();
+
+	static int calculateEstimatedTime(const std::vector<Task>& tasks);
+
+private:
+	std::string name, description;
+	int priority, estimatedTime;
 };
 
 #endif
