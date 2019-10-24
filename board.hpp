@@ -14,7 +14,7 @@ public:
     void addTask(std::string list, std::string name, int estimatedTime, int priority, std::string description);
     void editTask(std::string task, int estimatedTime, int priority, std::string description);
     void deleteTask(std::string task);
-    void addMember(std::string task, std::string member);
+    void setTaskOwner(std::string task, std::string member);
     void moveTask(std::string task, std::string list);
     void completeTask(std::string task);
     void printTask(std::string task);
@@ -39,8 +39,16 @@ public:
     void printAllUnfinishedTasksByPriority();
 
 private:
-    std::vector<User> users;
-    std::vector<List> lists;
+    std::vector<User*> users;
+    std::vector<List*> lists;
+
+    User* findUser(std::string name);
+    List* findList(std::string name);
+    Task* findTask(std::string name);
+
+    List* findListContainingTask(std::string taskName);
+
+    Task* getTaskFromList(std::string listName, std::string taskName);
 };
 
 #endif

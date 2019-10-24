@@ -9,18 +9,19 @@ class List
 {
 public:
     List(std::string name);
-    void addTask(std::string taskName);
+    void addTask(Task* task);
     void deleteTask(std::string taskName);
     void printTasks();
-    std::vector<Task> getUnassignedTasks();
-    std::vector<Task> getUnfinishedTasks();
-    std::vector<Task> getUserTasks(std::string username);
-    Task getTask(std::string taskName);
+    std::vector<Task*> getUnassignedTasks();
+    std::vector<Task*> getUnfinishedTasks();
+    std::vector<Task*> getUserTasks(std::string username);
+    Task* getTask(std::string taskName);
 
+    bool compareName(std::string name);
     std::string toString();
 
 private:
-    std::vector<Task> tasks;
+    std::vector<Task*> tasks;
 };
 
 #endif

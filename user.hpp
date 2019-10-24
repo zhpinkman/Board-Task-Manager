@@ -8,8 +8,10 @@ class User
 public:
 	User(std::string name);
 
-	std::string toString() const;
+	bool compareName(std::string username);
 
+	std::string toString() const;
+	
 private:
 	std::string name;
 };
