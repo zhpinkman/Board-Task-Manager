@@ -14,7 +14,7 @@ public:
     void printTasks();
     std::vector<Task*> getUnassignedTasks();
     std::vector<Task*> getUnfinishedTasks();
-    std::vector<Task*> getUserTasks(std::string username);
+    std::vector<Task*> getUserTasks(User* user);
     Task* getTask(std::string taskName);
 
     bool compareName(std::string name);

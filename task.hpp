@@ -13,7 +13,7 @@ public:
 	void editDetails(int estimatedTime, int priority, std::string newDescription);
 
 	void setOwner(User* user);
-	void completeTask();
+	void complete();
 
 	bool isCompleted() const;
 	bool isOwner(User* user) const;

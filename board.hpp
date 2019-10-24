@@ -41,6 +41,7 @@ public:
 private:
     std::vector<User*> users;
     std::vector<List*> lists;
+    std::vector<Task*> allTasks;
 
     User* findUser(std::string name);
     List* findList(std::string name);

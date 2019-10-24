@@ -4,7 +4,7 @@ Board::Board() {
 
 }
 
-void Board::addUser(std::string username){
+void Board::addUser(std::string username) {
 	if(findUser(username) != nullptr) {
 		std::cout << "User already exists" << std::endl;
 		return;
@@ -12,7 +12,7 @@ void Board::addUser(std::string username){
 	users.push_back(new User(username));
 }
 
-void Board::addTask(std::string listName, std::string name, int estimatedTime, int priority, std::string description){
+void Board::addTask(std::string listName, std::string name, int estimatedTime, int priority, std::string description) {
 	List* list = findList(listName);
 	if(list == nullptr) {
 		std::cout << "List not available" << std::endl;
@@ -25,7 +25,7 @@ void Board::addTask(std::string listName, std::string name, int estimatedTime, i
 	list->addTask(new Task(name, estimatedTime, priority, description));
 }
 
-void Board::editTask(std::string taskName, int estimatedTime, int priority, std::string description){
+void Board::editTask(std::string taskName, int estimatedTime, int priority, std::string description) {
 	Task* task = findTask(taskName);
 	if(task == nullptr) {
 		std::cout << "Task does not exist" << std::endl;
@@ -34,7 +34,7 @@ void Board::editTask(std::string taskName, int estimatedTime, int priority, std:
 	task->editDetails(estimatedTime, priority, description);
 }
 
-void Board::deleteTask(std::string taskName){
+void Board::deleteTask(std::string taskName) {
 	List* containerList = findListContainingTask(taskName);
 	if(containerList == nullptr) {
 		std::cout << "Task does not exist" << std::endl;
@@ -43,7 +43,7 @@ void Board::deleteTask(std::string taskName){
 	containerList->deleteTask(taskName);
 }
 
-void Board::setTaskOwner(std::string taskName, std::string username){
+void Board::setTaskOwner(std::string taskName, std::string username) {
 	Task* task = findTask(taskName);
 	if(task == nullptr) {
 		std::cout << "Task does not exist" << std::endl;
@@ -57,73 +57,113 @@ void Board::setTaskOwner(std::string taskName, std::string username){
 	task->setOwner(user);
 }
 
-void Board::moveTask(std::string taskName, std::string listName){
-	
+void Board::moveTask(std::string taskName, std::string listName) {
+	List* destinationList = findList(listName);
+	if(destinationList == nullptr) {
+		std::cout << "List not available" << std::endl;
+		return;
+	}
+	Task* task = findTask(name);
+	if(task == nullptr) {
+		std::cout << "Task does not exists" << std::endl;
+		return;
+	}
+	List* sourceList = findListContainingTask(taskName);
+	task = new Task(*task);
+	sourceList->deleteTask(taskName);
+	destinationList->addTask(new Task(name, estimatedTime, priority, description));
 }
 
-void Board::completeTask(std::string taskName){
+void Board::completeTask(std::string taskName) {
+	Task* task = findTask(name);
+	if(task == nullptr) {
+		std::cout << "Task does not exists" << std::endl;
+		return;
+	}
+	task->complete();
+}
+
+void Board::printTask(std::string taskName) {
+	Task* task = findTask(name);
+	if(task == nullptr) {
+		std::cout << "Task does not exists" << std::endl;
+		return;
+	}
+	std::cout << task->toString() << std::endl;
+}
+
+void Board::addList(std::string listName) {
+	if(findList(listName) != nullptr) {
+		std::cout << "List already exists" << std::endl;
+		return;
+	}
+	lists.push_back(new List(listName));
+}
+
+void Board::deleteList(std::string listName) {
+	List* list = findList(listName);
+	if(list == nullptr) {
+		std::cout << "List does not exists" << std::endl;
+		return;
+	}
+	lists.erase(std::find(lists.begin(), lists.end(), list));
+	delete list;
+}
+
+void Board::printList(std::string listName) {
+	List* list = findList(listName);
+	if(list == nullptr) {
+		std::cout << "List does not exists" << std::endl;
+		return;
+	}
+	std::cout << list->toString() << std::endl;
+}
+
+void Board::getUserTasks(std::string userName) {
+	std::vector<Task*> userTasks;
+	for(List* list : lists) {
+		std::vector<Task*> userTasksInList = list->getUserTasks(userName);
+		userTasks.insert(userTasks.end(), userTasksInList.begin(), userTasksInList.end());
+	}
+	TaskUtility::printTaskList(userTasks);
+}
+
+void Board::getUserUnfinishedTasks(std::string userName) {
 
 }
 
-void Board::printTask(std::string taskName){
+void Board::getTotalEstimatedTime() {
+
+}
+
+void Board::getTotalRemainingTime() {
 
 }
 
 
-void Board::addList(std::string name){
-
-}
-
-void Board::deleteList(std::string listName){
-
-}
-
-void Board::printList(std::string listName){
+void Board::getUserWorkload(std::string user) {
 
 }
 
 
-void Board::getUserTasks(std::string user){
+void Board::printUsersByWorkload() {
 
 }
 
-void Board::getUserUnfinishedTasks(std::string user){
-
-}
-
-
-void Board::getTotalEstimatedTime(){
-
-}
-
-void Board::getTotalRemainingTime(){
+void Board::printUsersByPerformance() {
 
 }
 
 
-void Board::getUserWorkload(std::string user){
+void Board::printBoard() {
 
 }
 
-
-void Board::printUsersByWorkload(){
-
-}
-
-void Board::printUsersByPerformance(){
+void Board::printUnassignedTasksByPriority() {
 
 }
 
-
-void Board::printBoard(){
-
-}
-
-void Board::printUnassignedTasksByPriority(){
-
-}
-
-void Board::printAllUnfinishedTasksByPriority(){
+void Board::printAllUnfinishedTasksByPriority() {
 
 }
 
