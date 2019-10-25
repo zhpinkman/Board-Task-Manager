@@ -4,8 +4,9 @@
 class TaskUtility
 {
 public:
-	static 
-private:	
+	static void printTaskList(vetor<Task *> user_tasks);
+
+private:
 	TaskUtility();
 };
 

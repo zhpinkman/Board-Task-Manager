@@ -12,11 +12,13 @@ public:
 
 	void editDetails(int estimatedTime, int priority, std::string newDescription);
 
-	void setOwner(User* user);
+	void setOwner(std::string userName);
+	User *getOwner();
 	void complete();
 
 	bool isCompleted() const;
-	bool isOwner(User* user) const;
+	bool isOwner(std::string userName) const;
+	bool hasOwner();
 	bool compareName(std::string name) const;
 	bool hasHigherPriorityThan(const Task &other) const;
 
@@ -27,6 +29,8 @@ public:
 private:
 	std::string name, description;
 	int priority, estimatedTime;
+	bool done;
+	User *owner;
 };
 
 #endif

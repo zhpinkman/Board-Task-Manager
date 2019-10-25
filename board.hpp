@@ -3,6 +3,7 @@
 
 #include "user.hpp"
 #include "list.hpp"
+#include "task_utility.hpp"
 #include <vector>
 #include <string>
 
@@ -39,17 +40,17 @@ public:
     void printAllUnfinishedTasksByPriority();
 
 private:
-    std::vector<User*> users;
-    std::vector<List*> lists;
-    std::vector<Task*> allTasks;
+    std::vector<User *> users;
+    std::vector<List *> lists;
+    std::vector<Task *> allTasks;
 
-    User* findUser(std::string name);
-    List* findList(std::string name);
-    Task* findTask(std::string name);
+    User *findUser(std::string name);
+    List *findList(std::string name);
+    Task *findTask(std::string name);
 
-    List* findListContainingTask(std::string taskName);
+    List *findListContainingTask(std::string taskName);
 
-    Task* getTaskFromList(std::string listName, std::string taskName);
+    Task *getTaskFromList(std::string listName, std::string taskName);
 };
 
 #endif
