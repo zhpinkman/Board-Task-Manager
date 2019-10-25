@@ -4,7 +4,7 @@
 class TaskUtility
 {
 public:
-	static void printTaskList(vetor<Task *> user_tasks);
+	static void printTaskList(std::vector<Task *> userTasks);
 
 private:
 	TaskUtility();
