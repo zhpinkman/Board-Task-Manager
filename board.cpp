@@ -159,7 +159,7 @@ void Board::getUserTasks(const User* user)
 		std::vector<Task *> userTasksInList = list->getUserTasks(user);
 		userTasks.insert(userTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
-	TaskUtility::printTaskList(userTasks);
+	printTaskList(userTasks);
 }
 
 void Board::getUserUnfinishedTasks(std::string userName)
@@ -176,7 +176,7 @@ void Board::getUserUnfinishedTasks(std::string userName)
 		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);
 		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
-	TaskUtility::printTaskList(userUnfinishedTasks);
+	printTaskList(userUnfinishedTasks);
 }
 
 std::vector<Task *> Board::getUserUnfinishedTasks(const User *user)
@@ -271,15 +271,24 @@ std::string Board::printBoard()
 
 void Board::printUnassignedTasksByPriority()
 {
-	// printTaskList()
+	std::vector<Task*> tasksList;
+	for (List* list: lists)
+	{
+		tasksList.insert(tasksList.end(), list->getUnassignedTasks().begin(), list->getUnassignedTasks().end());
+	}
+	tasksList = sortTaskListByPriority(tasksList);
+	printTaskList(tasksList);
 }
 
 void Board::printAllUnfinishedTasksByPriority()
 {
+	std::vector<Task*> tasksList;
 	for (User *user : users)
 	{
-		// for 
+		tasksList.insert(tasksList.end(), getUserUnfinishedTasks(user).begin(),getUserUnfinishedTasks(user).end());
 	}
+	tasksList = sortTaskListByPriority(tasksList);
+	printTaskList(tasksList);
 }
 
 std::string Board::printUserList(std::vector<User *> userList)
