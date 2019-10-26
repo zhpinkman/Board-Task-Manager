@@ -179,6 +179,17 @@ void Board::getUserUnfinishedTasks(std::string userName)
 	TaskUtility::printTaskList(userUnfinishedTasks);
 }
 
+std::vector<Task *> Board::getUserUnfinishedTasks(const User *user)
+{
+	std::vector<Task *> userUnfinishedTasks;
+	for (List *list : lists)
+	{
+		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(userName);
+		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
+	}
+	return userUnfinishedTasks;
+}
+
 int Board::getTotalEstimatedTime()
 {
 	int maxEstimatedTime = -1;
@@ -240,33 +251,66 @@ int Board::calculateUserRemainingWorkload(const User *user)
 
 void Board::printUsersByWorkload()
 {
-
+	printUserList(getUsersSortedByWorkload());
 }
 
 void Board::printUsersByPerformance()
 {
+	printUserList(getUsersSortedByPerformance());
 }
 
 void Board::printBoard()
 {
+	std::string formattedOutput;
+	for (List *list : lists)
+	{
+		formattedOutput += list->toString() + "\n";
+	}
+	return formattedOutput;
 }
 
 void Board::printUnassignedTasksByPriority()
 {
+	printTaskList()
 }
 
 void Board::printAllUnfinishedTasksByPriority()
 {
+	for (User *user : users)
+	{
+		for 
+	}
 }
 
 std::string Board::printUserList(std::vector<User *> userList)
 {
-	
+	std::string formattedOutput;
+	for (User *user : userList)
+	{
+		formattedOutput += user->toString() + "\n";
+	}
+	return formattedOutput;
 }
 
 bool Board::compareUsersByWorkload(const User *a, const User *b)
 {
 	return calculateUserTotalWorkload(a) < calculateUserTotalWorkload(b);
+}
+
+bool Board::compareUsersByPerformace(const User *a, const User *b)
+{
+	return calculateUserTotalWorkload(a) - calculateUserRemainingWorkload(a) < calculateUserTotalWorkload(b) - calculateUserRemainingWorkload(b);
+}
+
+bool Board::compareTasksByPriority(const Task *a, const Task *b)
+{
+	return a->comparePriority(*b);
+}
+
+std::vector<Task *> Board::sortTaskListByPriority(std::vector<Task *> taskList)
+{
+	std::sort(taskList.begin(), taskList.end(), compareTasksByPriority);
+	return taskList;
 }
 
 std::vector<User *> Board::getUsersSortedByWorkload()
@@ -276,15 +320,10 @@ std::vector<User *> Board::getUsersSortedByWorkload()
 	return usersCopy;
 }
 
-bool Board::compareUsersByPerformace(const User *a, const User *b)
-{
-	return calculateUserTotalWorkload(a) - calculateUserRemainingWorkload(a) < calculateUserTotalWorkload(b) - calculateUserRemainingWorkload(b);
-}
-
-std::vector<User *> Board::getUsersSortedByWorkload()
+std::vector<User *> Board::getUsersSortedByPerformance()
 {
 	std::vector<User *> usersCopy = users;
-	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByWorkload);
+	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByPerformace);
 	return usersCopy;
 }
 
