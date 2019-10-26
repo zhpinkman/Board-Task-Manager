@@ -4,18 +4,22 @@
 #include "user.hpp"
 #include <string>
 
+const std::string SUMMARY_SEPARATOR = " | ";
+const std::string TIME_UNIT = "h";
+const std::string NO_OWNER_IDENTICATOR = "Unassigned";
+
 class Task
 {
 public:
 	Task(std::string name, int estimatedTime, int priority, std::string description);
 	Task(const Task &task);
 
-	void editDetails(int estimatedTime, int priority, std::string newDescription);
+	void editDetails(int estimatedTime, int priority, std::string description);
 
 	void setOwner(User* user);
-	User *getOwner();
 	void complete();
 	int getEstimatedTime();
+
 	bool isCompleted() const;
 	bool isOwner(const User* user) const;
 	bool hasOwner() const;
