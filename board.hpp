@@ -43,7 +43,6 @@ public:
 private:
     std::vector<User *> users;
     std::vector<List *> lists;
-    std::vector<Task *> allTasks;
 
     User *findUser(std::string name);
     List *findList(std::string name);
@@ -51,7 +50,7 @@ private:
 
     List *findListContainingTask(std::string taskName);
 
-    Task *getTaskFromList(std::string listName, std::string taskName);
+    Task *findTaskInList(std::string listName, std::string taskName);
 };
 
 #endif

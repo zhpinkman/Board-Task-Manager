@@ -172,31 +172,17 @@ int Board::getTotalEstimatedTime()
 	int maxEstimatedTime = -1;
 	for (User* user: users)
 	{
-		std::vector<Task*> userTasks;
-		int userTasksEstimatedTime = 0;
-		for (List* list: lists)
-		{
-			userTasks = list->getUserTasks(user);
-			userTasksEstimatedTime += calculateEstimatedTime(userTasks);
-		}
-		maxEstimatedTime = std::max(maxEstimatedTime, userTasksEstimatedTime);
+		maxEstimatedTime = std::max(maxEstimatedTime, calculateUserTotalWorkload(user));
 	}
 	return maxEstimatedTime;
 }
 
 int Board::getTotalRemainingTime()
 {
-	int maxRemainingTime = -1;
+	int maxRemainingTime = 0;
 	for (User* user: users)
 	{
-		std::vector<Task*> userTasks;
-		int userTasksEstimatedTime = 0;
-		for (List* list: lists)
-		{
-			userTasks = list->getUserUnfinishedTasks(user);
-			userTasksEstimatedTime += calculateEstimatedTime(userTasks);
-		}
-		maxRemainingTime = std::max(maxRemainingTime, userTasksEstimatedTime);
+		maxRemainingTime = std::max(maxRemainingTime, calculateUserRemainingWorkload(user));
 	}
 	return maxRemainingTime;
 }
@@ -211,12 +197,38 @@ int Board::calculateEstimatedTime(std::vector<Task*> tasks)
 	return totalEstimatedTime;
 }
 
-void Board::getUserWorkload(std::string user)
+void Board::getUserWorkload(std::string userName)
 {
+	User *user = findUser(userName);
+	if(user == nullptr) {
+		return;
+	}
+	return calculateUserTotalWorkload(user);
+}
+
+void Board::calculateUserTotalWorkload(User *user) 
+{
+	int userTasksEstimatedTime = 0;
+	for (List* list : lists)
+	{
+		userTasksEstimatedTime += calculateEstimatedTime(list->getUserTasks(user));
+	}
+	return userTasksEstimatedTime;
+}
+
+void Board::calculateUserRemainingWorkload(User *user) 
+{
+	int userTasksEstimatedTime = 0;
+	for (List* list : lists)
+	{
+		userTasksEstimatedTime += calculateEstimatedTime(list->getUserUnfinishedTasks(user));
+	}
+	return userTasksEstimatedTime;
 }
 
 void Board::printUsersByWorkload()
 {
+
 }
 
 void Board::printUsersByPerformance()
@@ -233,6 +245,35 @@ void Board::printUnassignedTasksByPriority()
 
 void Board::printAllUnfinishedTasksByPriority()
 {
+}
+
+std::string Board::printUserList(std::vector<User *> userList)
+{
+	
+}
+
+bool Board::compareUsersByWorkload(const User *a, const User *b)
+{
+	return calculateUserTotalWorkload(a) < calculateUserTotalWorkload(b);
+}
+
+std::vector<User *> Board::getUsersSortedByWorkload()
+{
+	std::vector<User *> usersCopy = users;
+	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByWorkload);
+	return usersCopy;
+}
+
+bool Board::compareUsersByPerformace(const User *a, const User *b)
+{
+	return calculateUserTotalWorkload(a) - calculateUserRemainingWorkload(a) < calculateUserTotalWorkload(b) - calculateUserRemainingWorkload(b);
+}
+
+std::vector<User *> Board::getUsersSortedByWorkload()
+{
+	std::vector<User *> usersCopy = users;
+	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByWorkload);
+	return usersCopy;
 }
 
 User *Board::findUser(std::string name)
@@ -285,13 +326,12 @@ List *Board::findListContainingTask(std::string taskName)
 	return nullptr;
 }
 
-Task *Board::getTaskFromList(std::string listName, std::string taskName)
+Task *Board::findTaskInList(std::string listName, std::string taskName)
 {
 	List *listPointer = findList(listName);
 	if (listPointer == nullptr)
 	{
-		std::cout << "List not available" << std::endl;
-		return;
+		return nullptr;
 	}
 	return listPointer->getTask(taskName);
 }
