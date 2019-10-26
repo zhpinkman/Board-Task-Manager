@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include <iostream>
+#include <algorithm>
 
 Board::Board()
 {
@@ -145,10 +146,9 @@ void Board::printList(std::string listName)
 	std::cout << list->toString() << std::endl;
 }
 
-void Board::getUserTasks(std::string userName)
+void Board::getUserTasks(const User* user)
 {
 	std::vector<Task *> userTasks;
-	User* user = findUser(userName);
 	if (user == nullptr)
 	{
 		std::cout << "user does not exist" << std::endl;
@@ -184,7 +184,7 @@ std::vector<Task *> Board::getUserUnfinishedTasks(const User *user)
 	std::vector<Task *> userUnfinishedTasks;
 	for (List *list : lists)
 	{
-		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(userName);
+		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);
 		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
 	return userUnfinishedTasks;
@@ -259,7 +259,7 @@ void Board::printUsersByPerformance()
 	printUserList(getUsersSortedByPerformance());
 }
 
-void Board::printBoard()
+std::string Board::printBoard()
 {
 	std::string formattedOutput;
 	for (List *list : lists)
@@ -271,14 +271,14 @@ void Board::printBoard()
 
 void Board::printUnassignedTasksByPriority()
 {
-	printTaskList()
+	// printTaskList()
 }
 
 void Board::printAllUnfinishedTasksByPriority()
 {
 	for (User *user : users)
 	{
-		for 
+		// for 
 	}
 }
 
@@ -304,7 +304,7 @@ bool Board::compareUsersByPerformace(const User *a, const User *b)
 
 bool Board::compareTasksByPriority(const Task *a, const Task *b)
 {
-	return a->comparePriority(*b);
+	return a->hasHigherPriorityThan(*b);
 }
 
 std::vector<Task *> Board::sortTaskListByPriority(std::vector<Task *> taskList)

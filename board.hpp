@@ -25,7 +25,8 @@ public:
     void printList(std::string list);
 
     void getUserTasks(const User* user);
-    void getUserUnfinishedTasks(std::string user);
+    std::vector<Task*> getUserUnfinishedTasks(const User* user);
+    void getUserUnfinishedTasks(std::string userName);
 
     int getTotalEstimatedTime();
     int getTotalRemainingTime();
@@ -33,6 +34,8 @@ public:
     int calculateUserTotalWorkload(const User* user);
     int calculateUserRemainingWorkload(const User* user);
     int calculateUserTotalWorkload(User* user);
+    std::vector<User*> getUsersSortedByPerformance();
+    std::vector<Task*> sortTaskListByPriority(std::vector<Task*> taskList);
 
     int getUserWorkload(std::string user);
     bool compareUsersByWorkload(const User* a, const User* b);
@@ -42,8 +45,9 @@ public:
     void printUsersByWorkload();
     void printUsersByPerformance();
     std::string printUserList(std::vector<User *> userList);
+    bool compareTasksByPriority(const Task* a, const Task* b);
 
-    void printBoard();
+    std::string printBoard();
     void printUnassignedTasksByPriority();
     void printAllUnfinishedTasksByPriority();
 
