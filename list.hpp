@@ -16,8 +16,8 @@ public:
 
     std::vector<Task *> getUnassignedTasks();
     std::vector<Task *> getUnfinishedTasks();
-    std::vector<Task *> getUserUnfinishedTasks(User* user);
-    std::vector<Task *> getUserTasks(User* user);
+    std::vector<Task *> getUserUnfinishedTasks(const User* user);
+    std::vector<Task *> getUserTasks(const User* user);
     Task *getTask(std::string taskName);
 
     bool compareName(std::string name);

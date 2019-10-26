@@ -148,9 +148,15 @@ void Board::printList(std::string listName)
 void Board::getUserTasks(std::string userName)
 {
 	std::vector<Task *> userTasks;
+	User* user = findUser(userName);
+	if (user == nullptr)
+	{
+		std::cout << "user does not exist" << std::endl;
+		return;
+	}
 	for (List *list : lists)
 	{
-		std::vector<Task *> userTasksInList = list->getUserTasks(userName);
+		std::vector<Task *> userTasksInList = list->getUserTasks(user);
 		userTasks.insert(userTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
 	TaskUtility::printTaskList(userTasks);
@@ -159,9 +165,15 @@ void Board::getUserTasks(std::string userName)
 void Board::getUserUnfinishedTasks(std::string userName)
 {
 	std::vector<Task *> userUnfinishedTasks;
+	User* user = findUser(userName);
+	if (user == nullptr)
+	{
+		std::cout << "user does not exist" << std::endl;
+		return;
+	}
 	for (List *list : lists)
 	{
-		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(userName);
+		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);
 		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
 	TaskUtility::printTaskList(userUnfinishedTasks);
@@ -197,7 +209,7 @@ int Board::calculateEstimatedTime(std::vector<Task*> tasks)
 	return totalEstimatedTime;
 }
 
-void Board::getUserWorkload(std::string userName)
+int Board::getUserWorkload(std::string userName)
 {
 	User *user = findUser(userName);
 	if(user == nullptr) {
@@ -206,7 +218,7 @@ void Board::getUserWorkload(std::string userName)
 	return calculateUserTotalWorkload(user);
 }
 
-void Board::calculateUserTotalWorkload(User *user) 
+int Board::calculateUserTotalWorkload(const User *user) 
 {
 	int userTasksEstimatedTime = 0;
 	for (List* list : lists)
@@ -216,7 +228,7 @@ void Board::calculateUserTotalWorkload(User *user)
 	return userTasksEstimatedTime;
 }
 
-void Board::calculateUserRemainingWorkload(User *user) 
+int Board::calculateUserRemainingWorkload(const User *user) 
 {
 	int userTasksEstimatedTime = 0;
 	for (List* list : lists)

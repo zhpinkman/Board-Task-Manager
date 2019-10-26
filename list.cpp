@@ -52,7 +52,7 @@ std::vector<Task *> List::getUnfinishedTasks()
     return unfinishedTasks;
 }
 
-std::vector<Task *> List::getUserUnfinishedTasks(User *user)
+std::vector<Task *> List::getUserUnfinishedTasks(const User *user)
 {
     std::vector<Task *> userUnfinishedTasks;
     for (Task *task : tasks)
@@ -65,7 +65,7 @@ std::vector<Task *> List::getUserUnfinishedTasks(User *user)
     return userUnfinishedTasks;
 }
 
-std::vector<Task *> List::getUserTasks(User *user)
+std::vector<Task *> List::getUserTasks(const User *user)
 {
     std::vector<Task *> userTasks;
     for (Task *task : tasks)

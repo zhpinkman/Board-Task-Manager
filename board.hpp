@@ -24,17 +24,24 @@ public:
     void deleteList(std::string list);
     void printList(std::string list);
 
-    void getUserTasks(std::string user);
+    void getUserTasks(const User* user);
     void getUserUnfinishedTasks(std::string user);
 
     int getTotalEstimatedTime();
     int getTotalRemainingTime();
     int calculateEstimatedTime(std::vector<Task*> tasks);
+    int calculateUserTotalWorkload(const User* user);
+    int calculateUserRemainingWorkload(const User* user);
+    int calculateUserTotalWorkload(User* user);
 
-    void getUserWorkload(std::string user);
+    int getUserWorkload(std::string user);
+    bool compareUsersByWorkload(const User* a, const User* b);
+    std::vector<User *> getUsersSortedByWorkload();
+    bool compareUsersByPerformace(const User *a, const User *b);
 
     void printUsersByWorkload();
     void printUsersByPerformance();
+    std::string printUserList(std::vector<User *> userList);
 
     void printBoard();
     void printUnassignedTasksByPriority();
