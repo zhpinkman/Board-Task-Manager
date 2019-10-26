@@ -17,7 +17,7 @@ void List::deleteTask(Task *task)
     delete task;
 }
 
-void clear()
+void List::clear()
 {
     for (Task *task : tasks)
     {
