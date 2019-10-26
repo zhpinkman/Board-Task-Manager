@@ -11,27 +11,19 @@ void List::addTask(Task *task)
     tasks.push_back(task);
 }
 
-void List::deleteTask(std::string taskName)
+void List::deleteTask(Task *task)
 {
-    int taskIndex = 0;
-    for (Task *task : tasks)
-    {
-        if (task->compareName(taskName))
-        {
-            tasks.erase(tasks.begin() + taskIndex);
-            return;
-        }
-        taskIndex++;
-    }
-    std::cout << "task not found in the list" << std::endl;
+    tasks.erase(std::find(tasks.begin(), tasks.end(), task));
+    delete task;
 }
 
-void List::printTasks()
+void clear()
 {
     for (Task *task : tasks)
     {
-        task->toString();
+        delete task;
     }
+    tasks.clear();
 }
 
 std::vector<Task *> List::getUnassignedTasks()
@@ -39,7 +31,7 @@ std::vector<Task *> List::getUnassignedTasks()
     std::vector<Task *> unassignedTasks;
     for (Task *task : tasks) 
     {
-        if (task->getOwner() == nullptr)
+        if (!task->hasOwner())
         {
             unassignedTasks.push_back(task);
         }
@@ -60,12 +52,12 @@ std::vector<Task *> List::getUnfinishedTasks()
     return unfinishedTasks;
 }
 
-std::vector<Task *> List::getUserUnfinishedTasks(std::string userName)
+std::vector<Task *> List::getUserUnfinishedTasks(User *user)
 {
     std::vector<Task *> userUnfinishedTasks;
     for (Task *task : tasks)
     {
-        if (!task->isCompleted() && task->isOwner(userName))
+        if (!task->isCompleted() && task->isOwner(user))
         {
             userUnfinishedTasks.push_back(task);
         }
@@ -73,12 +65,12 @@ std::vector<Task *> List::getUserUnfinishedTasks(std::string userName)
     return userUnfinishedTasks;
 }
 
-std::vector<Task *> List::getUserTasks(std::string userName)
+std::vector<Task *> List::getUserTasks(User *user)
 {
     std::vector<Task *> userTasks;
     for (Task *task : tasks)
     {
-        if (task->isOwner(userName))
+        if (task->isOwner(user))
         {
             userTasks.push_back(task);
         }
@@ -95,15 +87,20 @@ Task *List::getTask(std::string taskName)
             return task;
         }
     }
-    // todo WHAT THE FUCK IS THIS SHIT, bara chi cout mikoni gharare find kone return kone dg age peyda nakarde bood null return mikone
-    // NARIN TO CODE
     return nullptr;
 }
-
 
 bool List::compareName(std::string name)
 {
     return name == listName;
 }
 
-// std::string List::toString() {}
+std::string List::toString() 
+{
+    std::string formattedOutput;
+    for (Task *task : tasks)
+    {
+        formattedOutput += task->toString() + "\n";
+    }
+    return formattedOutput;
+}

@@ -18,13 +18,11 @@ public:
 
 	bool isCompleted() const;
 	bool isOwner(std::string userName) const;
-	bool hasOwner();
+	bool hasOwner() const;
 	bool compareName(std::string name) const;
 	bool hasHigherPriorityThan(const Task &other) const;
 
 	std::string toString() const;
-
-	static int calculateEstimatedTime(const std::vector<Task> &tasks);
 
 private:
 	std::string name, description;
