@@ -50,7 +50,7 @@ void Board::deleteTask(std::string taskName)
 		std::cout << "Task does not exist" << std::endl;
 		return;
 	}
-	containerList->deleteTask(taskName);
+	containerList->deleteTask(findTask(taskName));
 }
 
 void Board::setTaskOwner(std::string taskName, std::string username)
@@ -85,9 +85,9 @@ void Board::moveTask(std::string taskName, std::string listName)
 		return;
 	}
 	List *sourceList = findListContainingTask(taskName);
-	task = new Task(*task);
-	destinationList->addTask(task);
-	sourceList->deleteTask(taskName);
+	Task* taskCopy = new Task(*task);
+	destinationList->addTask(taskCopy);
+	sourceList->deleteTask(task);
 }
 
 void Board::completeTask(std::string taskName)
@@ -167,12 +167,48 @@ void Board::getUserUnfinishedTasks(std::string userName)
 	TaskUtility::printTaskList(userUnfinishedTasks);
 }
 
-void Board::getTotalEstimatedTime()
+int Board::getTotalEstimatedTime()
 {
+	int maxEstimatedTime = -1;
+	for (User* user: users)
+	{
+		std::vector<Task*> userTasks;
+		int userTasksEstimatedTime = 0;
+		for (List* list: lists)
+		{
+			userTasks = list->getUserTasks(user);
+			userTasksEstimatedTime += calculateEstimatedTime(userTasks);
+		}
+		maxEstimatedTime = std::max(maxEstimatedTime, userTasksEstimatedTime);
+	}
+	return maxEstimatedTime;
 }
 
-void Board::getTotalRemainingTime()
+int Board::getTotalRemainingTime()
 {
+	int maxRemainingTime = -1;
+	for (User* user: users)
+	{
+		std::vector<Task*> userTasks;
+		int userTasksEstimatedTime = 0;
+		for (List* list: lists)
+		{
+			userTasks = list->getUserUnfinishedTasks(user);
+			userTasksEstimatedTime += calculateEstimatedTime(userTasks);
+		}
+		maxRemainingTime = std::max(maxRemainingTime, userTasksEstimatedTime);
+	}
+	return maxRemainingTime;
+}
+
+int Board::calculateEstimatedTime(std::vector<Task*> tasks)
+{
+	int totalEstimatedTime = 0;
+	for (Task* task: tasks)
+	{
+		totalEstimatedTime += task->getEstimatedTime();
+	}
+	return totalEstimatedTime;
 }
 
 void Board::getUserWorkload(std::string user)

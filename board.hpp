@@ -27,8 +27,9 @@ public:
     void getUserTasks(std::string user);
     void getUserUnfinishedTasks(std::string user);
 
-    void getTotalEstimatedTime();
-    void getTotalRemainingTime();
+    int getTotalEstimatedTime();
+    int getTotalRemainingTime();
+    int calculateEstimatedTime(std::vector<Task*> tasks);
 
     void getUserWorkload(std::string user);
 
