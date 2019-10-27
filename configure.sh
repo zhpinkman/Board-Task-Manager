@@ -1,5 +1,5 @@
 #!/bin/bash
-MAKETEXT='utrello:'
+MAKETEXT='utrello: directories'
 function make_all {
 	MAKETEXT="$MAKETEXT build/$1.o"
 }
@@ -32,5 +32,6 @@ do
 done
 MAKETEXT="$MAKETEXT\nclean: clear utrello\n"
 MAKETEXT="$MAKETEXT\nclear:\n\trm -f build/*.o utrello"
+MAKETEXT="$MAKETEXT\ndirectories:\n\tmkdir -p build"
 fi
 printf "$MAKETEXT" > makefile

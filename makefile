@@ -1,4 +1,4 @@
-utrello: build/board.o build/interface.o build/list.o build/main.o build/task.o build/task_utility.o build/user.o
+utrello: directories build/board.o build/interface.o build/list.o build/main.o build/task.o build/task_utility.o build/user.o
 	g++ build/board.o build/interface.o build/list.o build/main.o build/task.o build/task_utility.o build/user.o -o utrello
 
 build/board.o: src/board.cpp src/board.hpp
@@ -26,3 +26,5 @@ clean: clear utrello
 
 clear:
 	rm -f build/*.o utrello
+directories:
+	mkdir -p build
