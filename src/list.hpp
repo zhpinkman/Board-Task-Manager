@@ -26,7 +26,7 @@ public:
 
 private:
     std::vector<Task *> tasks;
-    std::string listName;
+    std::string name;
 };
 
 #endif

@@ -1,182 +1,182 @@
 #include "board.hpp"
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 Board::Board()
 {
 }
 
-void Board::addUser(std::string username)
+std::string Board::addUser(std::string userName)
 {
-	if (findUser(username) != nullptr)
+	if (findUser(userName) != nullptr)
 	{
-		std::cout << "User already exists" << std::endl;
-		return;
+		return "User already exists";
 	}
-	users.push_back(new User(username));
+	users.push_back(new User(userName));
+	return "Success";
 }
 
-void Board::addTask(std::string listName, std::string name, int estimatedTime, int priority, std::string description)
+std::string Board::addTask(std::string listName, std::string name, int estimatedTime, int priority, std::string description)
 {
 	List *list = findList(listName);
 	if (list == nullptr)
 	{
-		std::cout << "List not available" << std::endl;
-		return;
+		return "List not available";
 	}
 	if (findTask(name) != nullptr)
 	{
-		std::cout << "Task already exists" << std::endl;
-		return;
+		return "Task already exists";
 	}
 	list->addTask(new Task(name, estimatedTime, priority, description));
+	return "Success";
 }
 
-void Board::editTask(std::string taskName, int estimatedTime, int priority, std::string description)
+std::string Board::editTask(std::string taskName, int estimatedTime, int priority, std::string description)
 {
 	Task *task = findTask(taskName);
 	if (task == nullptr)
 	{
-		std::cout << "Task does not exist" << std::endl;
-		return;
+		return "Task does not exist";
 	}
 	task->editDetails(estimatedTime, priority, description);
+	return "Success";
 }
 
-void Board::deleteTask(std::string taskName)
+std::string Board::deleteTask(std::string taskName)
 {
 	List *containerList = findListContainingTask(taskName);
 	if (containerList == nullptr)
 	{
-		std::cout << "Task does not exist" << std::endl;
-		return;
+		return "Task does not exist";
 	}
 	containerList->deleteTask(findTask(taskName));
+	return "Success";
 }
 
-void Board::setTaskOwner(std::string taskName, std::string username)
+std::string Board::setTaskOwner(std::string taskName, std::string userName)
 {
 	Task *task = findTask(taskName);
 	if (task == nullptr)
 	{
-		std::cout << "Task does not exist" << std::endl;
-		return;
+		return "Task does not exist";
 	}
-	User *user = findUser(username);
+	User *user = findUser(userName);
 	if (user == nullptr)
 	{
-		std::cout << "User does not exist" << std::endl;
-		return;
+		return "User does not exist";
 	}
 	task->setOwner(user);
+	return "Success";
 }
 
-void Board::moveTask(std::string taskName, std::string listName)
+std::string Board::moveTask(std::string taskName, std::string listName)
 {
 	List *destinationList = findList(listName);
 	if (destinationList == nullptr)
 	{
-		std::cout << "List not available" << std::endl;
-		return;
+		return "List not available";
 	}
 	Task *task = findTask(taskName);
 	if (task == nullptr)
 	{
-		std::cout << "Task does not exists" << std::endl;
-		return;
+		return "Task does not exists";
 	}
 	List *sourceList = findListContainingTask(taskName);
 	Task* taskCopy = new Task(*task);
 	destinationList->addTask(taskCopy);
 	sourceList->deleteTask(task);
+	return "Success";
 }
 
-void Board::completeTask(std::string taskName)
+std::string Board::completeTask(std::string taskName)
 {
 	Task *task = findTask(taskName);
 	if (task == nullptr)
 	{
-		std::cout << "Task does not exists" << std::endl;
-		return;
+		return "Task does not exists";
 	}
 	task->complete();
+	return "Success";
 }
 
-void Board::printTask(std::string taskName)
+std::string Board::printTask(std::string taskName)
 {
 	Task *task = findTask(taskName);
 	if (task == nullptr)
 	{
-		std::cout << "Task does not exists" << std::endl;
-		return;
+		return "Task does not exists";
 	}
-	std::cout << task->toString() << std::endl;
+	return task->getFullDescription();
 }
 
-void Board::addList(std::string listName)
+std::string Board::addList(std::string listName)
 {
 	if (findList(listName) != nullptr)
 	{
-		std::cout << "List already exists" << std::endl;
-		return;
+		return "List already exists";
 	}
 	lists.push_back(new List(listName));
+	return "Success";
 }
 
-void Board::deleteList(std::string listName)
+std::string Board::deleteList(std::string listName)
 {
 	List *list = findList(listName);
 	if (list == nullptr)
 	{
-		std::cout << "List does not exists" << std::endl;
-		return;
+		return "List does not exists";
 	}
 	lists.erase(std::find(lists.begin(), lists.end(), list));
 	delete list;
+	return "Success";
 }
 
-void Board::printList(std::string listName)
+std::string Board::printList(std::string listName)
 {
 	List *list = findList(listName);
 	if (list == nullptr)
 	{
-		std::cout << "List does not exists" << std::endl;
-		return;
+		return "List does not exists";
 	}
-	std::cout << list->toString() << std::endl;
+	return list->toString();
 }
 
-void Board::getUserTasks(const User* user)
+std::string Board::printUserTasks(std::string userName) 
 {
-	std::vector<Task *> userTasks;
+	User *user = findUser(userName);
 	if (user == nullptr)
 	{
-		std::cout << "user does not exist" << std::endl;
-		return;
+		return "User does not exist";
 	}
+	return formatTaskListToString(getUserTasks(user));
+}
+
+std::vector<Task *> Board::getUserTasks(const User* user)
+{
+	std::vector<Task *> userTasks;
 	for (List *list : lists)
 	{
 		std::vector<Task *> userTasksInList = list->getUserTasks(user);
 		userTasks.insert(userTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
-	printTaskList(userTasks);
+	return userTasks;
 }
 
-void Board::getUserUnfinishedTasks(std::string userName)
+std::string Board::printUserUnfinishedTasks(std::string userName)
 {
 	std::vector<Task *> userUnfinishedTasks;
 	User* user = findUser(userName);
 	if (user == nullptr)
 	{
-		std::cout << "user does not exist" << std::endl;
-		return;
+		return "User does not exist";
 	}
 	for (List *list : lists)
 	{
 		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);
 		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
-	printTaskList(userUnfinishedTasks);
+	return formatTaskListToString(userUnfinishedTasks);
 }
 
 std::vector<Task *> Board::getUserUnfinishedTasks(const User *user)
@@ -184,7 +184,7 @@ std::vector<Task *> Board::getUserUnfinishedTasks(const User *user)
 	std::vector<Task *> userUnfinishedTasks;
 	for (List *list : lists)
 	{
-		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);
+		std::vector<Task *> userTasksInList = list->getUserUnfinishedTasks(user);\
 		userUnfinishedTasks.insert(userUnfinishedTasks.end(), userTasksInList.begin(), userTasksInList.end());
 	}
 	return userUnfinishedTasks;
@@ -224,7 +224,7 @@ int Board::getUserWorkload(std::string userName)
 {
 	User *user = findUser(userName);
 	if(user == nullptr) {
-		return;
+		return 0;
 	}
 	return calculateUserTotalWorkload(user);
 }
@@ -249,14 +249,19 @@ int Board::calculateUserRemainingWorkload(const User *user)
 	return userTasksEstimatedTime;
 }
 
-void Board::printUsersByWorkload()
+int Board::calculateUserPerformance(const User *user) 
 {
-	printUserList(getUsersSortedByWorkload());
+	return calculateUserTotalWorkload(user) - calculateUserRemainingWorkload(user);
 }
 
-void Board::printUsersByPerformance()
+std::string Board::printUsersByWorkload()
 {
-	printUserList(getUsersSortedByPerformance());
+	return printUserList(getUsersSortedByWorkload());
+}
+
+std::string Board::printUsersByPerformance()
+{
+	return printUserList(getUsersSortedByPerformance());
 }
 
 std::string Board::printBoard()
@@ -269,70 +274,90 @@ std::string Board::printBoard()
 	return formattedOutput;
 }
 
-void Board::printUnassignedTasksByPriority()
+std::string Board::printUnassignedTasksByPriority()
 {
-	std::vector<Task*> tasksList;
+	std::vector<Task *> tasksList;
 	for (List* list: lists)
 	{
-		tasksList.insert(tasksList.end(), list->getUnassignedTasks().begin(), list->getUnassignedTasks().end());
+		std::vector<Task *> listUnassignedTasks = list->getUnassignedTasks();
+		tasksList.insert(tasksList.end(), listUnassignedTasks.begin(), listUnassignedTasks.end());
 	}
 	tasksList = sortTaskListByPriority(tasksList);
-	printTaskList(tasksList);
+	return formatTaskListToString(tasksList);
 }
 
-void Board::printAllUnfinishedTasksByPriority()
+std::string Board::printAllUnfinishedTasksByPriority()
 {
 	std::vector<Task*> tasksList;
 	for (User *user : users)
 	{
-		tasksList.insert(tasksList.end(), getUserUnfinishedTasks(user).begin(),getUserUnfinishedTasks(user).end());
+		std::vector<Task *> userUnfinishedTasks = getUserUnfinishedTasks(user);
+		tasksList.insert(tasksList.end(), userUnfinishedTasks.begin(),userUnfinishedTasks.end());
 	}
 	tasksList = sortTaskListByPriority(tasksList);
-	printTaskList(tasksList);
+	return formatTaskListToString(tasksList);
 }
 
 std::string Board::printUserList(std::vector<User *> userList)
 {
-	std::string formattedOutput;
-	for (User *user : userList)
+	std::stringstream formatterStream;
+	for (int i = 0; i < userList.size(); i++)
 	{
-		formattedOutput += user->toString() + "\n";
+		formatterStream << i+1 << ". " << userList[i]->toString() << std::endl;
 	}
-	return formattedOutput;
-}
-
-bool Board::compareUsersByWorkload(const User *a, const User *b)
-{
-	return calculateUserTotalWorkload(a) < calculateUserTotalWorkload(b);
-}
-
-bool Board::compareUsersByPerformace(const User *a, const User *b)
-{
-	return calculateUserTotalWorkload(a) - calculateUserRemainingWorkload(a) < calculateUserTotalWorkload(b) - calculateUserRemainingWorkload(b);
-}
-
-bool Board::compareTasksByPriority(const Task *a, const Task *b)
-{
-	return a->hasHigherPriorityThan(*b);
+	return formatterStream.str();
 }
 
 std::vector<Task *> Board::sortTaskListByPriority(std::vector<Task *> taskList)
 {
-	std::sort(taskList.begin(), taskList.end(), compareTasksByPriority);
+	for (int i = 0; i < (int)taskList.size() - 1; i++) 
+	{ 
+		for (int j = 0; j < (int)taskList.size() - i - 1; j++) 
+		{ 
+			if (taskList[j]->hasHigherPriorityThan(*taskList[j+1])) 
+			{ 
+				Task* swapHelper = taskList[j];
+				taskList[j] = taskList[j+1];
+				taskList[j+1] = swapHelper;
+			} 
+		}
+	} 
 	return taskList;
 }
 
 std::vector<User *> Board::getUsersSortedByWorkload()
 {
 	std::vector<User *> usersCopy = users;
-	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByWorkload);
+	for (int i = 0; i < (int)usersCopy.size() - 1; i++) 
+	{ 
+		for (int j = 0; j < (int)usersCopy.size() - i - 1; j++) 
+		{ 
+			if (calculateUserTotalWorkload(usersCopy[j]) > calculateUserTotalWorkload(usersCopy[j+1])) 
+			{ 
+				User* swapHelper = usersCopy[j];
+				usersCopy[j] = usersCopy[j+1];
+				usersCopy[j+1] = swapHelper;
+			} 
+		}
+	} 
 	return usersCopy;
 }
 
 std::vector<User *> Board::getUsersSortedByPerformance()
 {
 	std::vector<User *> usersCopy = users;
-	std::sort(usersCopy.begin(), usersCopy.end(), compareUsersByPerformace);
+	for (int i = 0; i < (int)usersCopy.size() - 1; i++) 
+	{ 
+		for (int j = 0; j < (int)usersCopy.size() - i - 1; j++) 
+		{ 
+			if (calculateUserPerformance(usersCopy[j]) < calculateUserPerformance(usersCopy[j+1])) 
+			{ 
+				User* swapHelper = usersCopy[j];
+				usersCopy[j] = usersCopy[j+1];
+				usersCopy[j+1] = swapHelper;
+			}
+		}
+	} 
 	return usersCopy;
 }
 

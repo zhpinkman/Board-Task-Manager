@@ -26,7 +26,8 @@ public:
 	bool compareName(std::string name) const;
 	bool hasHigherPriorityThan(const Task &other) const;
 
-	std::string toString() const;
+	std::string getSummary() const;
+	std::string getFullDescription() const;
 
 private:
 	std::string name, description;

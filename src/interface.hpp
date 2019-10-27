@@ -2,6 +2,7 @@
 #define __INTERFACE_HPP__
 
 #include <string>
+#include "board.hpp"
 
 class Interface
 {
@@ -12,7 +13,7 @@ public:
 	void addTask(std::string list, std::string name, int estimatedTime, int priority, std::string description);
 	void editTask(std::string task, int estimatedTime, int priority, std::string description);
 	void deleteTask(std::string task);
-	void addMember(std::string task, std::string member);
+	void assignTask(std::string task, std::string user);
 	void moveTask(std::string task, std::string list);
 	void completeTask(std::string task);
 	void printTask(std::string task);
@@ -21,13 +22,13 @@ public:
 	void deleteList(std::string list);
 	void printList(std::string list);
 
-	void getUserTasks(std::string user);
-	void getUserUnfinishedTasks(std::string user);
+	void printUserTasks(std::string user);
+	void printUserUnfinishedTasks(std::string user);
 
-	void getTotalEstimatedTime();
-	void getTotalRemainingTime();
+	void printTotalEstimatedTime();
+	void printTotalRemainingTime();
 
-	void getUserWorkload(std::string user);
+	void printUserWorkload(std::string user);
 
 	void printUsersByWorkload();
 	void printUsersByPerformance();
@@ -35,6 +36,9 @@ public:
 	void printBoard();
 	void printUnassignedTasksByPriority();
 	void printAllUnfinishedTasksByPriority();
+
+private:
+	Board board;
 };
 
 #endif

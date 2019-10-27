@@ -3,7 +3,7 @@
 
 List::List(std::string name)
 {
-    listName = name;
+    this->name = name;
 }
 
 void List::addTask(Task *task)
@@ -92,15 +92,15 @@ Task *List::getTask(std::string taskName)
 
 bool List::compareName(std::string name)
 {
-    return name == listName;
+    return name == this->name;
 }
 
 std::string List::toString() 
 {
-    std::string formattedOutput;
+    std::string formattedOutput = "List " + name + "\n";    
     for (Task *task : tasks)
     {
-        formattedOutput += task->toString() + "\n";
+        formattedOutput += task->getSummary() + "\n";
     }
     return formattedOutput;
 }

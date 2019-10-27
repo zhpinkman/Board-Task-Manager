@@ -1,8 +1,10 @@
 #ifndef __TASK_UTILITY_HPP__
 #define __TASK_UTILITY_HPP__
 
+#include <vector>
+#include <string>
+#include "task.hpp"
 
-
-void printTaskList(std::vector<Task *> userTasks);
+std::string formatTaskListToString(std::vector<Task *> userTasks);
 
 #endif

@@ -8,7 +8,7 @@ class User
 public:
 	User(std::string name);
 
-	bool compareName(std::string username);
+	bool compareName(std::string name) const;
 
 	std::string toString() const;
 	
