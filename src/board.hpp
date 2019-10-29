@@ -7,7 +7,15 @@
 #include <vector>
 #include <string>
 
-class Board
+const std::string SUCCESS = "Success";
+const std::string DUPLICATE_USER_ERROR = "User already exists";
+const std::string DUPLICATE_LIST_ERROR = "List already exists";
+const std::string DUPLICATE_TASK_ERROR = "Task already exists";
+const std::string INVALID_USER_ERROR = "User does not exist";
+const std::string INVALID_LIST_ERROR = "List does not exist";
+const std::string INVALID_TASK_ERROR = "Task does not exist";
+
+    class Board
 {
 public:
     Board();
