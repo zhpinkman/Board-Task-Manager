@@ -28,13 +28,13 @@ public:
 	void printTotalEstimatedTime();
 	void printTotalRemainingTime();
 
-	void printUserWorkload(std::string user);
+    void printUserWorkload(std::string user);
 
 	void printUsersByWorkload();
 	void printUsersByPerformance();
 
-	void printBoard();
-	void printUnassignedTasksByPriority();
+    void printAllLists();
+    void printUnassignedTasksByPriority();
 	void printAllUnfinishedTasksByPriority();
 
 private:

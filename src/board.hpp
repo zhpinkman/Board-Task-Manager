@@ -57,7 +57,7 @@ public:
     std::string printUserList(std::vector<User *> userList);
     bool compareTasksByPriority(const Task* a, const Task* b);
 
-    std::string printBoard();
+    std::string printAllLists();
     std::string printUnassignedTasksByPriority();
     std::string printAllUnfinishedTasksByPriority();
 

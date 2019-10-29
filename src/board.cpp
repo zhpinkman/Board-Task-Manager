@@ -264,7 +264,7 @@ std::string Board::printUsersByPerformance()
 	return printUserList(getUsersSortedByPerformance());
 }
 
-std::string Board::printBoard()
+std::string Board::printAllLists()
 {
 	std::string formattedOutput;
 	for (List *list : lists)
