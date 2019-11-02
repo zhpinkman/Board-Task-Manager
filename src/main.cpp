@@ -1,50 +1,52 @@
 #include <iostream>
-#include "interface.hpp"
+#include "utrello_interface.hpp"
+
+using namespace std;
 
 int main()
 {
-	Interface interface;
+	UTrelloInterface interface;
 
-	interface.addUser("Zhivar");
-	interface.addUser("Amir");
-	interface.addUser("Bardia");
+	cout << interface.addUser("Zhivar") << endl;
+	cout << interface.addUser("Amir") << endl;
+	cout << interface.addUser("Bardia") << endl;
 
-	interface.addList("Code");
-	interface.addList("Description");
-	interface.addList("Misc");
+	cout << interface.addList("Code") << endl;
+	cout << interface.addList("Description") << endl;
+	cout << interface.addList("Misc") << endl;
 
-    interface.addTask("Code", "Do Everything", 12, 1, "Write the whole code");
-    interface.editTask("Do Everything", 12, 10, "Write the whole code");
-    interface.assignTask("Do Everything", "Bardia");
-    interface.printTask("Do Everything");
+    cout << interface.addTask("Code", "Do Everything", 12, 1, "Write the whole code") << endl;
+    cout << interface.editTask("Do Everything", 12, 10, "Write the whole code") << endl;
+    cout << interface.assignTask("Do Everything", "Bardia") << endl;
+    cout << interface.printTask("Do Everything") << endl;
 
-    interface.addTask("Code", "Destroy code formatting", 1, 2, "Rewrite the whole code in a worse format");
-	interface.assignTask("Destroy code formatting", "Zhivar");
+    cout << interface.addTask("Code", "Destroy code formatting", 1, 2, "Rewrite the whole code in a worse format") << endl;
+	cout << interface.assignTask("Destroy code formatting", "Zhivar") << endl;
 
-	interface.addTask("Description", "Write Description", 3, 1, "Write the damn description");
-	interface.assignTask("Write Description", "Amir");
-	interface.addTask("Misc", "Upload Assignment", 1, 1, "Upload it");
+	cout << interface.addTask("Description", "Write Description", 3, 1, "Write the damn description") << endl;
+	cout << interface.assignTask("Write Description", "Amir") << endl;
+	cout << interface.addTask("Misc", "Upload Assignment", 1, 1, "Upload it") << endl;
 
-	interface.completeTask("Do Everything");
-	interface.printUsersByPerformance();
-    interface.printUsersByWorkload();
+	cout << interface.completeTask("Do Everything") << endl;
+	cout << interface.printUsersByPerformance() << endl;
+    cout << interface.printUsersByWorkload() << endl;
 
-    interface.printUnassignedTasksByPriority();
-	interface.deleteTask("Upload Assignment");
-	interface.printAllUnfinishedTasksByPriority();
+    cout << interface.printUnassignedTasksByPriority() << endl;
+	cout << interface.deleteTask("Upload Assignment") << endl;
+	cout << interface.printAllUnfinishedTasksByPriority() << endl;
 
-	interface.addTask("Misc", "Have fun", 10, 2, "Just do it");
-	interface.moveTask("Have fun", "Code");
-	interface.printTask("Have fun");
+	cout << interface.addTask("Misc", "Have fun", 10, 2, "Just do it") << endl;
+	cout << interface.moveTask("Have fun", "Code") << endl;
+	cout << interface.printTask("Have fun") << endl;
 
-    interface.printList("Code");
+    cout << interface.printList("Code") << endl;
 
-    interface.printAllLists();
+    cout << interface.printAllLists() << endl;
 
-    interface.printUserTasks("Amir");
+    cout << interface.printUserTasks("Amir") << endl;
 
-    interface.printUnassignedTasksByPriority();
+    cout << interface.printUnassignedTasksByPriority() << endl;
 
-    interface.printAllUnfinishedTasksByPriority();
+    cout << interface.printAllUnfinishedTasksByPriority() << endl;
     return 0;
 }

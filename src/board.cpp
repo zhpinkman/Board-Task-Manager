@@ -303,7 +303,7 @@ std::string Board::printUserList(std::vector<User *> userList)
 	std::stringstream formatterStream;
 	for (int i = 0; i < userList.size(); i++)
 	{
-		formatterStream << i+1 << ". " << userList[i]->toString() << std::endl;
+		formatterStream << userList[i]->toString() << std::endl;
 	}
 	return formatterStream.str();
 }
