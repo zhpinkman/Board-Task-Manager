@@ -11,12 +11,12 @@ void Interface::addUser(std::string username)
 	std::cout << board.addUser(username) << std::endl;
 }
 
-void Interface::addTask(std::string list, std::string name, int estimatedTime, int priority, std::string description)
+void Interface::addTask(std::string list, std::string name, unsigned int estimatedTime, unsigned int priority, std::string description)
 {
 	std::cout << board.addTask(list, name, estimatedTime, priority, description) << std::endl;
 }
 
-void Interface::editTask(std::string task, int estimatedTime, int priority, std::string description)
+void Interface::editTask(std::string task, unsigned int estimatedTime, unsigned int priority, std::string description)
 {
 	std::cout << board.editTask(task, estimatedTime, priority, description) << std::endl;
 }

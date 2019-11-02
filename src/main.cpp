@@ -4,7 +4,7 @@
 int main()
 {
 	Interface interface;
-	
+
 	interface.addUser("Zhivar");
 	interface.addUser("Amir");
 	interface.addUser("Bardia");
@@ -13,9 +13,12 @@ int main()
 	interface.addList("Description");
 	interface.addList("Misc");
 
-	interface.addTask("Code", "Do Everything", 12, 1, "Write the whole code");
-	interface.assignTask("Do Everything", "Bardia");
-	interface.addTask("Code", "Destroy code formatting", 1, 2, "Rewrite the whole code in a worse format");
+    interface.addTask("Code", "Do Everything", 12, 1, "Write the whole code");
+    interface.editTask("Do Everything", 12, 10, "Write the whole code");
+    interface.assignTask("Do Everything", "Bardia");
+    interface.printTask("Do Everything");
+
+    interface.addTask("Code", "Destroy code formatting", 1, 2, "Rewrite the whole code in a worse format");
 	interface.assignTask("Destroy code formatting", "Zhivar");
 
 	interface.addTask("Description", "Write Description", 3, 1, "Write the damn description");
@@ -24,8 +27,9 @@ int main()
 
 	interface.completeTask("Do Everything");
 	interface.printUsersByPerformance();
+    interface.printUsersByWorkload();
 
-	interface.printUnassignedTasksByPriority();
+    interface.printUnassignedTasksByPriority();
 	interface.deleteTask("Upload Assignment");
 	interface.printAllUnfinishedTasksByPriority();
 
@@ -33,6 +37,14 @@ int main()
 	interface.moveTask("Have fun", "Code");
 	interface.printTask("Have fun");
 
-	interface.printList("Code");
-	return 0;
+    interface.printList("Code");
+
+    interface.printAllLists();
+
+    interface.printUserTasks("Amir");
+
+    interface.printUnassignedTasksByPriority();
+
+    interface.printAllUnfinishedTasksByPriority();
+    return 0;
 }

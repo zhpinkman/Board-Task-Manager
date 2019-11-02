@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 
-Task::Task(std::string name, int estimatedTime, int priority, std::string description) 
+Task::Task(std::string name, int estimatedTime, int priority, std::string description)
 {
 	this->name = name;
 	editDetails(estimatedTime, priority, description);
@@ -10,7 +10,7 @@ Task::Task(std::string name, int estimatedTime, int priority, std::string descri
 	this->owner = nullptr;
 }
 
-Task::Task(const Task &task) 
+Task::Task(const Task &task)
 {
 	this->name = task.name;
 	this->estimatedTime = task.estimatedTime;
@@ -20,7 +20,7 @@ Task::Task(const Task &task)
 	this->done = task.done;
 }
 
-void Task::editDetails(int estimatedTime, int priority, std::string description) 
+void Task::editDetails(int estimatedTime, int priority, std::string description)
 {
 	this->name = name;
 	this->estimatedTime = estimatedTime;
@@ -28,56 +28,56 @@ void Task::editDetails(int estimatedTime, int priority, std::string description)
 	this->description = description;
 }
 
-void Task::setOwner(User* user) 
+void Task::setOwner(User* user)
 {
 	owner = user;
 }
 
-void Task::complete() 
+void Task::complete()
 {
 	done = true;
 }
 
-int Task::getEstimatedTime() 
+int Task::getEstimatedTime()
 {
 	return estimatedTime;
 }
 
-bool Task::isCompleted() const 
+bool Task::isCompleted() const
 {
 	return done;
 }
 
-bool Task::isOwner(const User* user) const 
+bool Task::isOwner(const User* user) const
 {
 	return user == owner;
 }
 
-bool Task::hasOwner() const 
+bool Task::hasOwner() const
 {
 	return owner != nullptr;
 }
 
-bool Task::compareName(std::string name) const 
+bool Task::compareName(std::string name) const
 {
 	return name == this->name;
 }
 
-bool Task::hasHigherPriorityThan(const Task &other) const 
+bool Task::hasHigherPriorityThan(const Task &other) const
 {
 	return this->priority > other.priority;
 }
 
-std::string Task::getSummary() const 
+std::string Task::getSummary() const
 {
 	std::stringstream outputFormatter;
-	outputFormatter << priority << SUMMARY_SEPARATOR << name << SUMMARY_SEPARATOR << 
-		(owner == nullptr ? NO_OWNER_IDENTICATOR : owner->toString()) << 
+	outputFormatter << priority << SUMMARY_SEPARATOR << name << SUMMARY_SEPARATOR <<
+		(owner == nullptr ? NO_OWNER_IDENTICATOR : owner->toString()) <<
 		SUMMARY_SEPARATOR << estimatedTime << TIME_UNIT;
 	return outputFormatter.str();
 }
 
-std::string Task::getFullDescription() const 
+std::string Task::getFullDescription() const
 {
 	std::stringstream outputFormatter;
 	outputFormatter << name << std::endl;
@@ -85,6 +85,6 @@ std::string Task::getFullDescription() const
 	outputFormatter << "Priority: " << priority << std::endl;
 	outputFormatter << "Estimated Time: " << estimatedTime << std::endl;
 	outputFormatter << (owner == nullptr ? NO_OWNER_IDENTICATOR : "Assigned to " + owner->toString());
-	outputFormatter << std::endl; 
+	outputFormatter << std::endl;
 	return outputFormatter.str();
 }

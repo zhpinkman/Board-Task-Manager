@@ -10,8 +10,8 @@ public:
 	Interface();
 
 	void addUser(std::string username);
-	void addTask(std::string list, std::string name, int estimatedTime, int priority, std::string description);
-	void editTask(std::string task, int estimatedTime, int priority, std::string description);
+	void addTask(std::string list, std::string name, unsigned int estimatedTime, unsigned int priority, std::string description);
+	void editTask(std::string task, unsigned int estimatedTime, unsigned int priority, std::string description);
 	void deleteTask(std::string task);
 	void assignTask(std::string task, std::string user);
 	void moveTask(std::string task, std::string list);
