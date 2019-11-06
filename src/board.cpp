@@ -289,10 +289,10 @@ std::string Board::printUnassignedTasksByPriority()
 std::string Board::printAllUnfinishedTasksByPriority()
 {
 	std::vector<Task*> tasksList;
-	for (User *user : users)
+	for (List *list : lists)
 	{
-		std::vector<Task *> userUnfinishedTasks = getUserUnfinishedTasks(user);
-		tasksList.insert(tasksList.end(), userUnfinishedTasks.begin(),userUnfinishedTasks.end());
+		std::vector<Task *> listUnfinishedTasks = list->getUnfinishedTasks();
+		tasksList.insert(tasksList.end(), listUnfinishedTasks.begin(),listUnfinishedTasks.end());
 	}
 	tasksList = sortTaskListByPriority(tasksList);
 	return formatTaskListToString(tasksList);

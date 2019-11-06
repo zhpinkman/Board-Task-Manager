@@ -63,4 +63,5 @@ List Misc
 
 1 | Write Description | Amir | 3h
 2 | Destroy code formatting | Zhivar | 1h
+2 | Have fun | Unassigned | 10h
 
